@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Clicker with Upgrades</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f8f8f8;
+        }
+
+        .upgrade {
+            display: inline-block;
+            margin: 20px;
+            cursor: pointer;
+        }
+
+        .upgrade img {
+            width: 100px;
+            height: 100px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .upgrade img:hover {
+            transform: scale(1.1);
+        }
+
+        #score {
+            font-size: 36px;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        #instructions {
+            font-size: 18px;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .upgradeBtn {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Display the cookie image -->
+<img id="cookie" src="img/cookie.png" alt="Cookie" onclick="clickCookie()">
+
+<!-- Display the current score -->
+<p id="score">Cookies: 0</p>
+
+<!-- Display instructions -->
+<p id="instructions">Click the cookie to get more!</p>
+
+<!-- Display upgrades -->
+<div class="upgrade" onclick="buyCursor()">
+    <img src="img/cursor.png" alt="Cursor Upgrade">
+    <p>Cursor Upgrade (Cost: <span id="cursorCost">10</span> cookies)</p>
+</div>
+
+<div class="upgrade" onclick="buyWitch()">
+    <img src="img/hexe.png" alt="Witch Upgrade">
+    <p>Witch Upgrade (Cost: <span id="witchCost">20</span> cookies)</p>
+</div>
+
+<div class="upgrade" onclick="buyEgg()">
+    <img src="img/ei.jpg" alt="Egg Upgrade">
+    <p>Egg Upgrade (Cost: <span id="eggCost">30</span> cookies)</p>
+</div>
+
+<div class="upgrade" onclick="buyRoboter()">
+    <img src="img/roboter.png" alt="Roboter Upgrade">
+    <p>Roboter Upgrade (Cost: <span id="roboterCost">40</span> cookies)</p>
+</div>
+
+<div class="upgrade" onclick="buyHeart()">
+    <img src="img/schlawiner.jpg" alt="Heart Upgrade">
+    <p>Heart Upgrade (Cost: <span id="heartCost">50</span> cookies)</p>
+</div>
+
+<div class="upgrade" onclick="buyUltimate()">
+    <img src="img/ultimate.png" alt="Ultimate Upgrade">
+    <p>Ultimate Upgrade (Cost: <span id="ultimateCost">500,000</span> cookies)</p>
+</div>
+
+<div class="upgrade" onclick="buySecret()">
+    <img src="img/secret.jpg" alt="Secret Upgrade">
+    <p>Secret Upgrade (Cost: <span id="secretCost">1,000,000,000</span> cookies)</p>
+</div>
+
+<div class="upgrade" onclick="buyGalaxy()">
+    <img src="img/galaxy.jpg" alt="Galaxy Upgrade">
+    <p>Galaxy Upgrade (Cost: <span id="galaxyCost">9,999,999,999,999</span> cookies)</p>
+</div>
+
+<!-- Display the upgrade button -->
+<button class="upgradeBtn" onclick="buyUpgrade()">Buy Upgrade (Cost: <span id="upgradeCost">10</span> cookies)</button>
+
+<script>
+    // Initialize variables
+    let score = 0;
+    let passiveCookies = 0;
+    let clickMultiplier = 1;
+    let cursorCost = 10;
+    let witchCost = 20;
+    let eggCost = 30;
+    let roboterCost = 40;
+    let heartCost = 50;
+    let ultimateCost = 500000;
+    let secretCost = 1000000000;
+    let galaxyCost = 9999999999999;
+
+    // Function to update the score and display it
+    function updateScore() {
+        document.getElementById("score").innerText = `Cookies: ${score} (Passive: ${passiveCookies}/s)`; // Update the displayed score
+        document.getElementById("cursorCost").innerText = cursorCost; // Update the displayed cursor cost
+        document.getElementById("witchCost").innerText = witchCost; // Update the displayed witch cost
+        document.getElementById("eggCost").innerText = eggCost; // Update the displayed egg cost
+        document.getElementById("roboterCost").innerText = roboterCost; // Update the displayed roboter cost
+        document.getElementById("heartCost").innerText = heartCost; // Update the displayed heart cost
+        document.getElementById("ultimateCost").innerText = ultimateCost; // Update the displayed ultimate cost
+        document.getElementById("secretCost").innerText = secretCost; // Update the displayed secret cost
+        document.getElementById("galaxyCost").innerText = galaxyCost; // Update the displayed galaxy cost
+    }
+
+    // Function to handle clicking on the cookie
+    function clickCookie() {
+        score += clickMultiplier; // Increment the score based on the clickMultiplier
+        updateScore(); // Update the displayed score
+    }
+
+    // Function to buy a cursor upgrade
+    function buyCursor() {
+        if (score >= cursorCost) {
+            score -= cursorCost; // Deduct the cursor cost
+            clickMultiplier *= 1.5; // Increase clickMultiplier
+            cursorCost *= 2; // Increase the cost for the next cursor upgrade
+            updateScore(); // Update the displayed score
+        } else {
+            alert("Not enough cookies to buy the cursor upgrade!");
+        }
+    }
+
+    // Function to buy a witch upgrade
+    function buyWitch() {
+        if (score >= witchCost) {
+            score -= witchCost; // Deduct the witch cost
+            passiveCookies += 2; // Increase passive cookies per second
+            witchCost *= 2; // Increase the cost for the next witch upgrade
+            setInterval(() => {
+                score += passiveCookies; // Add passive cookies to the score every second
+                updateScore(); // Update the displayed score
+            }, 1000);
+            updateScore(); // Update the displayed score
+        } else {
+            alert("Not enough cookies to buy the witch upgrade!");
+        }
+    }
+
+    // Function to buy an egg upgrade
+    function buyEgg() {
+        if (score >= eggCost) {
+            score -= eggCost; // Deduct the egg cost
+            passiveCookies += 3; // Increase passive cookies per second
+            eggCost *= 2; // Increase the cost for the next egg upgrade
+            setInterval(() => {
+                score += passiveCookies; // Add passive cookies to the score every second
+                updateScore(); // Update the displayed score
+            }, 1000);
+            updateScore(); // Update the displayed score
+        } else {
+            alert("Not enough cookies to buy the egg upgrade!");
+        }
+    }
+
+    // Function to buy a roboter upgrade
+    function buyRoboter() {
+        if (score >= roboterCost) {
+            score -= roboterCost; // Deduct the roboter cost
+            passiveCookies += 4; // Increase passive cookies per second
+            roboterCost *= 2; // Increase the cost for the next roboter upgrade
+            setInterval(() => {
+                score += passiveCookies; // Add passive cookies to the score every second
+                updateScore(); // Update the displayed score
+            }, 1000);
+            updateScore(); // Update the displayed score
+        } else {
+            alert("Not enough cookies to buy the roboter upgrade!");
+        }
+    }
+
+    // Function to buy a heart upgrade
+    function buyHeart() {
+        if (score >= heartCost) {
+            score -= heartCost; // Deduct the heart cost
+            passiveCookies += 5; // Increase passive cookies per second
+            heartCost *= 2; // Increase the cost for the next heart upgrade
+            setInterval(() => {
+                score += passiveCookies; // Add passive cookies to the score every second
+                updateScore(); // Update the displayed score
+            }, 1000);
+            updateScore(); // Update the displayed score
+        } else {
+            alert("Not enough cookies to buy the heart upgrade!");
+        }
+    }
+
+    // Function to buy the ultimate upgrade
+    function buyUltimate() {
+        if (score >= ultimateCost) {
+            score -= ultimateCost; // Deduct the ultimate cost
+            passiveCookies += 1000; // Increase passive cookies per second
+            ultimateCost *= 2; // Increase the cost for the next ultimate upgrade exponentially
+            setInterval(() => {
+                score += passiveCookies; // Add passive cookies to the score every second
+                updateScore(); // Update the displayed score
+            }, 1000);
+            updateScore(); // Update the displayed score
+        } else {
+            alert("Not enough cookies to buy the ultimate upgrade!");
+        }
+    }
+
+    // Function to buy the secret upgrade
+    function buySecret() {
+        if (score >= secretCost) {
+            score -= secretCost; // Deduct the secret cost
+            passiveCookies += 5000; // Increase passive cookies per second
+            secretCost *= 2; // Increase the cost for the next secret upgrade exponentially
+            setInterval(() => {
+                score += passiveCookies; // Add passive cookies to the score every second
+                updateScore(); // Update the displayed score
+            }, 1000);
+            updateScore(); // Update the displayed score
+        } else {
+            alert("Not enough cookies to buy the secret upgrade!");
+        }
+    }
+
+    // Function to buy the galaxy upgrade
+    function buyGalaxy() {
+        if (score >= galaxyCost) {
+            score -= galaxyCost; // Deduct the galaxy cost
+            passiveCookies += 1000000; // Increase passive cookies per second
+            galaxyCost *= 2; // Increase the cost for the next galaxy upgrade exponentially
+            setInterval(() => {
+                score += passiveCookies; // Add passive cookies to the score every second
+                updateScore(); // Update the displayed score
+            }, 1000);
+            updateScore(); // Update the displayed score
+        } else {
+            alert("Not enough cookies to buy the galaxy upgrade!");
+        }
+    }
+</script>
+
+</body>
+</html>

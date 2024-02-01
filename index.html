@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wissenschaftswoche JHG</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <style>
+    .page-content{
+      padding: 20px 0px;
+      display: flex; 
+      flex-direction: column-reverse; 
+      flex-wrap: wrap-reverse; 
+      justify-content: flex-end; 
+      align-items: flex-start; 
+      align-content: stretch;
+    }
+    #http {
+      padding: 70px 600px;
+    }
+    #HTML {
+      padding: 70px 450px;
+    }
+    #Funktionsweise {
+      padding: 70px 450px;
+    }
+    /* .page-content:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+    } */
+  </style>
+</head>
+<body>
+<!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">Wissenschaftswoche JHG 29.01.24 - 02.02.24</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <a href="quellen.html" class="mdl-navigation__link">Quellen zur Webseite</a>
+        <a href="https://www.jhg-traunreut.schule/impressum.html" class="mdl-navigation__link">Datenschutz der Schule</a>
+        <a href="https://www.jhg-traunreut.schule/impressum.html" class="mdl-navigation__link">Impressum der Schule</a>
+        <a href="https://www.jhg-traunreut.schule/schule/schuldaten.html" class="mdl-navigation__link">Schuldaten</a>
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Projekte</span>
+    <nav class="mdl-navigation">
+      <a href="game.html" class="mdl-navigation__link">Auto-Spiel</a>
+      <a class="mdl-navigation__link" href="KI.html">KI-Experiment</a>
+      <a class="mdl-navigation__link" href="clicker.html">Clicker-Test</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+      <a href="https://www.jhg-traunreut.schule/">
+      <img class="jhg" src="img/JHG-Logo-transparent.png" width="400px">
+      </a>
+    </div>
+    <div id="http">
+      <img src="img/http-bild.png" width="300px" height="300px">
+    </div>
+    <div id="HTML">
+      <img src="img/HTML-CSS-JavaScript.png" width="600px" height="300px">
+    </div>
+    <div id="Funktionsweise">
+      <img src="img/Funktionsweise.png" width="600px" height="400px">
+    </div>
+  </main>
+</div>
+</body>
+</html>

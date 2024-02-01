@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <title>Auto-Spiel</title>
+    <style>
+        canvas {
+            /* padding: 100px 200px; */
+            background-color: skyblue;
+        }
+        #score {
+            font-size: 30px;
+        }
+    </style>
+    <script>
+        let spielstop = 1500;
+        let KEY_SPACE = false; // 32
+        let KEY_UP = false; // 38
+        let KEY_DOWN = false; // 40
+        let speed = 6;
+        let backgroundImage = new Image();
+        let carSpeed = 8;
+        let canvas;
+        let stayScoreNumber;
+        //let canvas = document.querySelector<HTMLCanvasElement>(id)!;
+
+        let ctx;
+        
+
+        let car = {
+            x: 50,
+            y: 185,
+            width: 170,
+            height: 100,
+            src: 'img/Auto.png'
+        };
+        let hindernisse = []
+
+        let score = 0;
+
+        document.onkeydown = function(e) {
+            if (e.keyCode == 32) {
+                KEY_SPACE = true;
+            } 
+            else  if (e.keyCode == 38) {
+                KEY_UP = true;
+            }
+            else if (e.keyCode == 40) {
+                KEY_DOWN = true;
+            }     
+        }
+        document.onkeyup = function(e) {
+            if (e.keyCode == 32) {
+                KEY_SPACE = false;
+            }
+            else if (e.keyCode == 38) {
+                KEY_UP = false;
+            }
+            else if (e.keyCode == 40) {
+                KEY_DOWN = false;
+            }     
+        }
+        function startGame() {
+            canvas = document.getElementById("canvas");
+            ctx = canvas.getContext("2d");
+            loadImages();
+            setInterval(checkForCollision, 1000 / 25);
+            setInterval(hindernisseErstellen, spielstop);
+            setInterval(update, 1000 / 25);
+            setInterval(speedIncrease, 2000);
+            setInterval(carLimit, 1000 / 25);
+            setInterval(updateScore, 1000);
+            draw();
+        }
+        function updateScore() {
+            score++; // Erhöhung des Scores
+            document.getElementById("score").innerText = "Score: " + score;
+        }
+        function stayScore() {
+            score = stayScoreNumber;
+
+
+        }
+
+        function checkForCollision() {
+            hindernisse.forEach(function(hindernis){
+                if(car.x + car.width > hindernis.x && car.y + car.height > hindernis.y && car.x < hindernis.x && car.y < hindernis.y) {
+                    car.img.src = 'img/Explosion.png';
+                    hindernisse = hindernisse.filter(u => u != hindernis);      // "Delete"-funktion
+                    carSpeed = 0;
+                    stayScoreNumber = score;
+                    setInterval(stayScore, 1000);
+                }
+            })
+        }
+        function speedIncrease() {
+            speed += 1;
+        }
+        function carLimit() {
+            if (car.y < 10) {
+                car.y = 10;
+            }
+            if (car.y > 685) {
+                car.y = 685;
+            }
+        }
+        function hindernisseErstellen() {
+            let hindernis = {
+                x: 1500,
+                y: Math.random() * (700 - 30) + 30,
+                width: 150,
+                height: 90,
+                src: 'img/Hindernis.png',
+                img: new Image()
+            };
+            hindernis.img.src = hindernis.src;  // Hindernis bild wird geladen
+            hindernisse.push(hindernis);           
+        }
+        function update() {
+            if(KEY_UP) {
+                car.y -= carSpeed;
+            }
+            if(KEY_DOWN) {
+                car.y += carSpeed;
+            }
+        hindernisse.forEach(function(hindernis){
+            hindernis.x -= speed;
+        })
+        }
+        function loadImages() {
+            
+            backgroundImage.src = "img/straße.png";
+            car.img = new Image();
+            car.img.src = car.src;
+        }
+        function draw() {
+            ctx.drawImage(backgroundImage, 0, 0, 1620, 780);
+            ctx.drawImage(car.img, car.x, car.y, car.width, car.height);
+            hindernisse.forEach(function(hindernis) {
+                ctx.drawImage(hindernis.img, hindernis.x, hindernis.y, hindernis.width, hindernis.height)
+            })
+            requestAnimationFrame(draw);
+        }
+    </script>
+</head>
+<body onload="startGame()">
+    <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <a href="index.html"><span class="mdl-layout-title">Auto-Spiel</span></a>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <p id="score">Score: 0</p>
+      </nav>
+    </div>
+  </header>
+  <main>
+      <canvas id="canvas" width="1620" height="780">
+      </canvas>
+  </main>
+</body>
+</html>
